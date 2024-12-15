@@ -1,0 +1,92 @@
+@import "../../css/reset.css";
+
+.wrapper {
+  height: 300vh;
+  background: aquamarine;
+  position: relative;
+}
+
+[class*=image] {
+  position: absolute;
+  box-shadow: 2px 0 4px black;
+}
+
+.cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://placehold.co/1680x1050") fixed center / cover;
+}
+
+.image1 {
+  top: 10%;
+  left: 5%;
+}
+
+.image2 {
+  top: 20%;
+  right: 25%;
+}
+
+.image3 {
+  top: 40%;
+  left: 50%;
+}
+
+.image4 {
+  top: 60%;
+  right: 60%;
+}
+
+.image5 {
+  top: 80%;
+  left: 75%;
+}
+
+.center-box-wrapper {
+  position: sticky;
+  height: 100vh;
+  width: 100%;
+}
+
+.center-box {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid #000;
+}
+
+.line {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(0);
+  font-size: 24px;
+  transition: none;
+}
+
+.line1 {
+  opacity: 1;
+}
+
+.line1, .line2, .line3 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gallery {
+  height: 100vh;
+  background: bisque;
+}

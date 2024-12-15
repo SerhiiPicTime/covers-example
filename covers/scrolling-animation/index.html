@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scrolling Animation</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="cover" id="cover"></div>
+  <img alt="image" class="image1" id="image1" />
+  <img alt="image" class="image2" id="image2" />
+  <img alt="image" class="image3" id="image3" />
+  <img alt="image" class="image4" id="image4" />
+  <img alt="image" class="image5" id="image5" />
+  <div class="center-box-wrapper">
+    <div class="center-box">
+      <div class="line line1">First line</div>
+      <div class="line line2">Second line</div>
+      <div class="line line3">
+        <img src="https://placehold.co/100x70" alt="logo" style="max-height: 100%;">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="gallery">
+  <h1>Gallery</h1>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.min.js"></script>
+<script>
+  const controller = new ScrollMagic.Controller();
+  
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const timeline = gsap.timeline();
+
+    timeline.to("#image1", { y: -100, ease: "linear" }, 0)
+            .to("#image2", { y: -200, ease: "linear" }, 0)
+            .to("#image3", { y: -800, ease: "linear" }, 0)
+            .to("#image4", { y: -200, ease: "linear" }, 0)
+            .to("#image5", { y: -300, ease: "linear" }, 0);
+
+    const scene = new ScrollMagic.Scene({
+      triggerElement: ".wrapper",
+      triggerHook: 0,
+      duration: "200%"
+    }).setTween(timeline).addTo(controller);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.querySelector('.wrapper');
+    const wrapperHeight = wrapper.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    new ScrollMagic.Scene({
+      triggerElement: ".wrapper",
+      triggerHook: 0,
+      duration: wrapperHeight - windowHeight
+    }).setPin('.center-box').addTo(controller);
+    
+    const tl1 = gsap.timeline();
+    tl1.to(".line1", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
+    tl1.fromTo(".line2",
+      {opacity: 0, y: 50},
+      {opacity: 1, y: 0, duration: 1, ease: "power2.out"}, 0
+    );
+
+    const scene1 = new ScrollMagic.Scene({
+      triggerElement: ".wrapper",
+      triggerHook: 0,
+      duration: "100%"
+    }).setTween(tl1).addTo(controller);
+
+    const tl2 = gsap.timeline();
+    tl2.to(".line2", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
+    tl2.fromTo(".line3",
+      {opacity: 0, y: 50},
+      {opacity: 1, y: 0, duration: 1, ease: "power2.out"}, 0
+    );
+
+    const scene2 = new ScrollMagic.Scene({
+      triggerElement: ".wrapper",
+      triggerHook: 0,
+      duration: "100%",
+      offset: window.innerHeight
+    }).setTween(tl2).addTo(controller);
+  });
+
+
+</script>
+<script src="main.js"></script>
+</body>
+</html>

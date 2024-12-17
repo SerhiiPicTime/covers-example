@@ -3,12 +3,19 @@
  * @param {CoverOptions} options
  */
 function initCover(options) {
-  const { images, colorPalette } = options
+  const { images, colorPalette, scrollToTheEndCallback } = options
 
   images.forEach(({ url, domId }) => {
     const image = document.getElementById(domId);
     image.setAttribute('src', url)
   });
+
+  document.documentElement.style.setProperty('--primary-color', colorPalette.primary);
+  document.documentElement.style.setProperty('--secondary-color', colorPalette.secondary);
+
+  const scrollToTheEndButton = document.getElementById('scroll-button');
+
+  scrollToTheEndButton.addEventListener('click', scrollToTheEndCallback);
 }
 
 initCover({
@@ -37,5 +44,12 @@ initCover({
   colorPalette: {
     primary: '#fff',
     secondary: 'red',
+  },
+  scrollToTheEndCallback() {
+    const gallery = document.querySelector('#gallery')
+
+    gallery.scrollIntoView({
+      behavior: 'smooth'
+    })
   }
 })

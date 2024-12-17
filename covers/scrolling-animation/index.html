@@ -14,7 +14,7 @@
   <img alt="image" class="image3" id="image3" />
   <img alt="image" class="image4" id="image4" />
   <img alt="image" class="image5" id="image5" />
-  <div class="center-box-wrapper">
+  <div class="sticky-box-wrapper">
     <div class="center-box">
       <div class="line line1">First line</div>
       <div class="line line2">Second line</div>
@@ -22,9 +22,12 @@
         <img src="https://placehold.co/100x70" alt="logo" style="max-height: 100%;">
       </div>
     </div>
+    <button class="scroll-button" id="scroll-button">
+      &darr;
+    </button>
   </div>
 </div>
-<div class="gallery">
+<div class="gallery" id="gallery">
   <h1>Gallery</h1>
 </div>
 
@@ -38,10 +41,10 @@
 
     const timeline = gsap.timeline();
 
-    timeline.to("#image1", { y: -100, ease: "linear" }, 0)
+    timeline.to("#image1", { y: -300, ease: "linear" }, 0)
             .to("#image2", { y: -200, ease: "linear" }, 0)
-            .to("#image3", { y: -800, ease: "linear" }, 0)
-            .to("#image4", { y: -200, ease: "linear" }, 0)
+            .to("#image3", { y: -1200, ease: "linear" }, 0)
+            .to("#image4", { y: -500, ease: "linear" }, 0)
             .to("#image5", { y: -300, ease: "linear" }, 0);
 
     const scene = new ScrollMagic.Scene({
@@ -52,16 +55,6 @@
   });
 
   document.addEventListener('DOMContentLoaded', function() {
-    const wrapper = document.querySelector('.wrapper');
-    const wrapperHeight = wrapper.offsetHeight;
-    const windowHeight = window.innerHeight;
-
-    new ScrollMagic.Scene({
-      triggerElement: ".wrapper",
-      triggerHook: 0,
-      duration: wrapperHeight - windowHeight
-    }).setPin('.center-box').addTo(controller);
-    
     const tl1 = gsap.timeline();
     tl1.to(".line1", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
     tl1.fromTo(".line2",
@@ -89,8 +82,6 @@
       offset: window.innerHeight
     }).setTween(tl2).addTo(controller);
   });
-
-
 </script>
 <script src="main.js"></script>
 </body>

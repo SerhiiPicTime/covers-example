@@ -16,6 +16,7 @@ declare namespace Covers {
   interface CoverOptions {
     images: CoverImage[];
     colorPalette: CoverColors;
+    scrollToTheEndCallback: () => void;
   }
 }
 

@@ -17,6 +17,9 @@ declare namespace Covers {
     images: CoverImage[];
     colorPalette: CoverColors;
     scrollToTheEndCallback: () => void;
+    galleryName: string,
+    galleryDate: number,
+    logoUrl: string,
   }
 }
 

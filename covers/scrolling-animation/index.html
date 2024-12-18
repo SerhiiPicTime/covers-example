@@ -3,7 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <title>Scrolling Animation</title>
-  <link rel="stylesheet" href="main.css">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    
+    .wrapper {
+      height: 300svh;
+      background: aquamarine;
+      position: relative;
+    }
+
+    [class*=image] {
+      position: absolute;
+      box-shadow: 2px 0 4px black;
+    }
+
+    .cover {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("https://placehold.co/1680x1050") fixed center / cover;
+    }
+
+    .image1 {
+      top: 10%;
+      left: 5%;
+    }
+
+    .image2 {
+      top: 20%;
+      right: 25%;
+    }
+
+    .image3 {
+      top: 40%;
+      left: 50%;
+    }
+
+    .image4 {
+      top: 60%;
+      right: 60%;
+    }
+
+    .image5 {
+      top: 80%;
+      left: 75%;
+    }
+
+    .sticky-box-wrapper {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .center-box {
+      z-index: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #000;
+    }
+
+    .scroll-button {
+      position: absolute;
+      bottom: 64px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255,0,0,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .line {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(0);
+      font-size: 24px;
+      transition: none;
+    }
+
+    .line1 {
+      opacity: 1;
+    }
+
+    .line1, .line2, .line3 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .gallery {
+      height: 100svh;
+      background: bisque;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,10 +130,10 @@
   <img alt="image" class="image5" id="image5" />
   <div class="sticky-box-wrapper">
     <div class="center-box">
-      <div class="line line1">First line</div>
-      <div class="line line2">Second line</div>
+      <div class="line line1" id="gallery-name">First line</div>
+      <div class="line line2" id="date">Second line</div>
       <div class="line line3">
-        <img src="https://placehold.co/100x70" alt="logo" style="max-height: 100%;">
+        <img src="https://placehold.co/100x70" id="logo" alt="logo" style="max-height: 100%;">
       </div>
     </div>
     <button class="scroll-button" id="scroll-button">
@@ -82,7 +196,89 @@
       offset: window.innerHeight
     }).setTween(tl2).addTo(controller);
   });
+
+  /**
+   * Initialize the cover functionality
+   * @param {CoverOptions} options
+   */
+  function initCover(options) {
+    const { images, colorPalette, scrollToTheEndCallback, logoUrl, galleryName, galleryDate } = options
+
+    images.forEach(({ url, domId }) => {
+      const element = document.getElementById(domId);
+      
+      if (element instanceof HTMLImageElement) {
+        element.setAttribute('src', url)
+      } else {
+        element.style.setProperty('--image-url', url)
+      }
+    });
+    
+    const logoElement = document.querySelector('#logo')
+    logoElement.setAttribute('src', logoUrl)
+    
+    const galleryNameElement = document.querySelector('#gallery-name')
+    galleryNameElement.textContent = galleryName
+
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const dateElement = document.querySelector('#date')
+    dateElement.textContent = formatter.format(galleryDate)
+
+    document.documentElement.style.setProperty('--primary-color', colorPalette.primary);
+    document.documentElement.style.setProperty('--secondary-color', colorPalette.secondary);
+
+    const scrollToTheEndButton = document.getElementById('scroll-button');
+
+    scrollToTheEndButton.addEventListener('click', scrollToTheEndCallback);
+  }
+
+  initCover({
+    images: [
+      {
+        url: 'https://placehold.co/300x200',
+        domId: 'image1',
+      },
+      {
+        url: 'https://placehold.co/400x200',
+        domId: 'image2',
+      },
+      {
+        url: 'https://placehold.co/200x400',
+        domId: 'image3',
+      },
+      {
+        url: 'https://placehold.co/200x200',
+        domId: 'image4',
+      },
+      {
+        url: 'https://placehold.co/300x200',
+        domId: 'image5',
+      },
+      {
+        url: 'https://placehold.co/1680x1050',
+        domId: 'cover',
+      }
+    ],
+    colorPalette: {
+      primary: '#fff',
+      secondary: 'red',
+    },
+    logoUrl: 'https://placehold.co/100x50',
+    galleryName: 'Gallery Name',
+    galleryDate: new Date(),
+    scrollToTheEndCallback() {
+      const gallery = document.querySelector('#gallery')
+
+      gallery.scrollIntoView({
+        behavior: 'smooth'
+      })
+    }
+  })
+
 </script>
-<script src="main.js"></script>
 </body>
 </html>

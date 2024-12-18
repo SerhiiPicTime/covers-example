@@ -9,6 +9,11 @@
       padding: 0;
       box-sizing: border-box;
     }
+    
+    :root {
+      --primary-color: #fff;
+      --secondary-color: #000;
+    }
 
     
     .wrapper {
@@ -86,7 +91,8 @@
       transform: translate(-50%, -50%);
       width: 48px;
       height: 48px;
-      background: rgba(255,0,0,0.5);
+      background: var(--secondary-color);
+      color: var(--primary-color);
       border-radius: 50%;
       cursor: pointer;
       transition: background-color 0.3s ease;
@@ -103,11 +109,16 @@
       transition: none;
     }
 
-    .line1 {
+    .line__gallery-name {
+      color: var(--primary-color);
       opacity: 1;
     }
+    
+    .line__date {
+      color: var(--secondary-color);
+    }
 
-    .line1, .line2, .line3 {
+    .line__gallery-name, .line__date, .line__logo {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -130,9 +141,9 @@
   <img alt="image" class="image5" id="image5" />
   <div class="sticky-box-wrapper">
     <div class="center-box">
-      <div class="line line1" id="gallery-name">First line</div>
-      <div class="line line2" id="date">Second line</div>
-      <div class="line line3">
+      <div class="line line__gallery-name" id="gallery-name">Gallery Name</div>
+      <div class="line line__date" id="date">Date</div>
+      <div class="line line__logo">
         <img src="https://placehold.co/100x70" id="logo" alt="logo" style="max-height: 100%;">
       </div>
     </div>
@@ -170,8 +181,8 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     const tl1 = gsap.timeline();
-    tl1.to(".line1", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
-    tl1.fromTo(".line2",
+    tl1.to(".line__gallery-name", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
+    tl1.fromTo(".line__date",
       {opacity: 0, y: 50},
       {opacity: 1, y: 0, duration: 1, ease: "power2.out"}, 0
     );
@@ -183,8 +194,8 @@
     }).setTween(tl1).addTo(controller);
 
     const tl2 = gsap.timeline();
-    tl2.to(".line2", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
-    tl2.fromTo(".line3",
+    tl2.to(".line__date", {duration: 1, opacity: 0, y: -50, ease: "power2.out"}, 0);
+    tl2.fromTo(".line__logo",
       {opacity: 0, y: 50},
       {opacity: 1, y: 0, duration: 1, ease: "power2.out"}, 0
     );
@@ -264,8 +275,8 @@
       }
     ],
     colorPalette: {
-      primary: '#fff',
-      secondary: 'red',
+      primary: '#fd8b10',
+      secondary: '#a97a6d',
     },
     logoUrl: 'https://placehold.co/100x50',
     galleryName: 'Gallery Name',
